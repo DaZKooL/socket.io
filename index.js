@@ -1,17 +1,18 @@
 // Setup basic express server
-var express = require('express');
-var app = express();
-var path = require('path');
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
-var port = process.env.PORT || 3000;
-var facemesh = require('@tensorflow-models/facemesh');
+const express = require('express');
+const app = express();
+const path = require('path');
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+const port = process.env.PORT || 3000;
+const facemesh = require('@tensorflow-models/facemesh');
 
 
 async function main() {
   // Load the MediaPipe facemesh model.
+  return;
   const model = await facemesh.load();
- 
+ console.log (model);
   // Pass in a video stream (or an image, canvas, or 3D tensor) to obtain an
   // array of detected faces from the MediaPipe graph.
   const predictions = await model.estimateFaces(document.querySelector("video"));
@@ -60,9 +61,10 @@ async function main() {
     }
   }
 }
-
+setTimeout (main,3000);
 server.listen(port, () => {
   console.log('Server listening at port %d', port);
+  
 });
 
 // Routing
@@ -74,7 +76,7 @@ var numUsers = 0;
 
 io.on('connection', (socket) => {
   var addedUser = false;
-  main();
+
   // when the client emits 'new message', this listens and executes
   socket.on('new message', (data) => {
     // we tell the client to execute 'new message'
