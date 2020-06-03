@@ -8,7 +8,6 @@
   "license": "BSD",
   "dependencies": {
     "@tensorflow-models/facemesh": "0.0.3",
-    "@tensorflow/tfjs": "^2.0.0",
     "@tensorflow/tfjs-backend-wasm": "^2.0.0",
     "@tensorflow/tfjs-converter": "^2.0.0",
     "@tensorflow/tfjs-core": "^2.0.0",
@@ -18,5 +17,8 @@
   },
   "scripts": {
     "start": "node index.js"
+  },
+  "browser": {
+    "crypto": false
   }
 }
