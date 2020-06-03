@@ -1,3 +1,13 @@
+import * as facemesh from '@tensorflow-models/facemesh';
+import Stats from 'stats.js';
+import * as tf from '@tensorflow/tfjs-core';
+import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
+// TODO(annxingyuan): read version from tfjsWasm directly once
+// https://github.com/tensorflow/tfjs/pull/2819 is merged.
+import {version} from '@tensorflow/tfjs-backend-wasm/dist/version';
+
+import {TRIANGULATION} from './triangulation';
+
 // Setup basic express server
 const express = require('express');
 const app = express();
@@ -5,6 +15,7 @@ const path = require('path');
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const port = process.env.PORT || 3000
+const facemesh = require('@tensorflow-models/facemesh');
 
 
 //tf.setBackend('wasm').then(() => main());
