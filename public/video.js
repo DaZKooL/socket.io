@@ -18,9 +18,6 @@
 // https://github.com/tensorflow/tfjs/pull/2819 is merged.
 
 
-tfjsWasm.setWasmPath(
-    `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm`);
-    console.log ('hello')
 
 function isMobile() {
   const isAndroid = /Android/i.test(navigator.userAgent);
