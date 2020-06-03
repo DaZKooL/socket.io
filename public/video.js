@@ -48,7 +48,7 @@ const mobile = isMobile();
 // Don't render the point cloud on mobile in order to maximize performance and
 // to avoid crowding limited screen space.
 const renderPointcloud = mobile === false;
-const stats = new Stats();
+//const stats = new Stats();
 const state = {
   backend: 'wasm',
   maxFaces: 1,
@@ -103,7 +103,7 @@ async function setupCamera() {
 }
 
 async function renderPrediction() {
-  stats.begin();
+ // stats.begin();
 
   const predictions = await model.estimateFaces(video);
   ctx.drawImage(
@@ -155,7 +155,7 @@ async function renderPrediction() {
     }
   }
 
-  stats.end();
+ // stats.end();
   requestAnimationFrame(renderPrediction);
 };
 
@@ -163,7 +163,7 @@ async function main() {
   await tf.setBackend(state.backend);
   setupDatGui();
 
-  stats.showPanel(0);  // 0: fps, 1: ms, 2: mb, 3+: custom
+ // stats.showPanel(0);  // 0: fps, 1: ms, 2: mb, 3+: custom
   document.getElementById('main').appendChild(stats.dom);
 
   await setupCamera();
