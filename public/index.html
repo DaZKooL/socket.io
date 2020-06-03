@@ -2,49 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Chat</title>
+  <title>Socket.IO Chat Example</title>
   <link rel="stylesheet" href="style.css">
- <!-- Load three.js -->
- <script src="//cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js"></script>
- <!-- Load scatter-gl.js -->
- <script src="//cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script>
-<style>
-  .canvas-wrapper, #scatter-gl-container {
-    display: inline-block;
-    vertical-align: top;
-  }
-
-  #scatter-gl-container {
-    border: solid 1px black;
-    position: relative;
-  }
-
-  /* center the canvas within its wrapper */
-  #scatter-gl-container canvas {
-    transform: translate3d(-50%, -50%, 0);
-    left: 50%;
-    top: 50%;
-    position: absolute;
-  }
-</style>
 </head>
 <body>
-  <div id="main">
-    <div class="container">
-      <div class="canvas-wrapper">
-        <canvas id="output"></canvas>
-        <video id="video" playsinline style="
-          -webkit-transform: scaleX(-1);
-          transform: scaleX(-1);
-          visibility: hidden;
-          width: auto;
-          height: auto;
-          ">
-        </video>
-      </div>
-      <div id="scatter-gl-container"></div>
-    </div>
-  </div>
   <ul class="pages">
     <li class="chat page">
       <div class="chatArea">
@@ -59,15 +20,9 @@
       </div>
     </li>
   </ul>
-  <video width="640" height="480"></video>
 
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/facemesh"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
-  <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>  
-  <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-  <script type="module" src="/video.js"></script>
-  <!--<script src="/main.js"></script>-->
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/main.js"></script>
 </body>
 </html>
