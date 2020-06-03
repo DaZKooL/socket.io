@@ -17,14 +17,15 @@
 // TODO(annxingyuan): read version from tfjsWasm directly once
 // https://github.com/tensorflow/tfjs/pull/2819 is merged.
 
-import {TRIANGULATION} from './triangulation';
 
 tfjsWasm.setWasmPath(
     `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm`);
+    console.log ('hello')
 
 function isMobile() {
   const isAndroid = /Android/i.test(navigator.userAgent);
   const isiOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  console.log (isAndroid)
   return isAndroid || isiOS;
 }
 
