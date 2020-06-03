@@ -25,7 +25,7 @@
 
 import {TRIANGULATION} from './triangulation';
 
-return;
+
 tfjsWasm.setWasmPath(
     `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${
         version}/dist/tfjs-backend-wasm.wasm`);
@@ -209,4 +209,4 @@ async function main() {
   }
 };
 
-main();
+//main();
