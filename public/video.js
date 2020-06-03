@@ -14,11 +14,6 @@
  * limitations under the License.
  * =============================================================================
  */
-
-import * as facemesh from './@tensorflow-models/facemesh';
-//import Stats from 'stats.js';
-import * as tf from './@tensorflow/tfjs-core';
-import * as tfjsWasm from './@tensorflow/tfjs-backend-wasm';
 // TODO(annxingyuan): read version from tfjsWasm directly once
 // https://github.com/tensorflow/tfjs/pull/2819 is merged.
 
