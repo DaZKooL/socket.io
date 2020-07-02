@@ -161,6 +161,7 @@ function insertMessageToDOM(options, isFromMe) {
     messageEl.classList.add('message--theirs');
   }
 
+  
   const messagesEl = document.querySelector('.messages');
   messagesEl.appendChild(clone);
 
