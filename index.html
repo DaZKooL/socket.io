@@ -1,83 +1,100 @@
-
-
-// Setup basic express server
-const express = require('express');
-const app = express();
-const path = require('path');
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
-const port = process.env.PORT || 3000
-const facemesh = require('@tensorflow-models/facemesh');
-
-
-//tf.setBackend('wasm').then(() => main());
-
-server.listen(port, () => {
-  console.log('Server listening at port %d', port);
-  
-});
-
-// Routing
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Chatroom
-
-var numUsers = 0;
-
-io.on('connection', (socket) => {
-  var addedUser = false;
-
-  // when the client emits 'new message', this listens and executes
-  socket.on('new message', (data) => {
-    // we tell the client to execute 'new message'
-    socket.broadcast.emit('new message', {
-      username: socket.username,
-      message: data
-    });
-  });
-
-  // when the client emits 'add user', this listens and executes
-  socket.on('add user', (username) => {
-    if (addedUser) return;
-
-    // we store the username in the socket session for this client
-    socket.username = username;
-    ++numUsers;
-    addedUser = true;
-    socket.emit('login', {
-      numUsers: numUsers
-    });
-    // echo globally (all clients) that a person has connected
-    socket.broadcast.emit('user joined', {
-      username: socket.username,
-      numUsers: numUsers
-    });
-  });
-
-  // when the client emits 'typing', we broadcast it to others
-  socket.on('typing', () => {
-    socket.broadcast.emit('typing', {
-      username: socket.username
-    });
-  });
-
-  // when the client emits 'stop typing', we broadcast it to others
-  socket.on('stop typing', () => {
-    socket.broadcast.emit('stop typing', {
-      username: socket.username
-    });
-  });
-
-  // when the user disconnects.. perform this
-  socket.on('disconnect', () => {
-    if (addedUser) {
-      --numUsers;
-
-      // echo globally that this client has left
-      socket.broadcast.emit('user left', {
-        username: socket.username,
-        numUsers: numUsers
-      });
+<!DOCTYPE html>
+<html>
+<head>
+  <script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 16px;
+      height: 100vh;
     }
-  });
-});
+    .content {
+      box-shadow: rgba(156, 172, 172, 0.2) 0px 2px 2px, rgba(156, 172, 172, 0.2) 0px 4px 4px, rgba(156, 172, 172, 0.2) 0px 8px 8px, rgba(156, 172, 172, 0.2) 0px 16px 16px, rgba(156, 172, 172, 0.2) 0px 32px 32px, rgba(156, 172, 172, 0.2) 0px 64px 64px;
+      border-radius: 3px;
+      height: 100vh;
+      max-height: 600px;
+      width: 100vw;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+    .messages {
+      flex-grow: 1;
+      padding: 20px 30px;
+      overflow: auto;
+    }
+    .message {
+      display: flex;
+      flex-direction: column;
+    }
+    .message--mine {
+      align-items: flex-end;
+    }
+    .message--theirs {
+      align-items: flex-start;
+    }
+    .message__name {
+      padding: 10px 0;
+    }
+    .message__bubble {
+      padding: 20px;
+      border-radius: 3px;
+    }
+    .message--theirs .message__bubble {
+      background: #6363bf;
+      color: white;
+    }
+    .message--mine .message__bubble {
+      background: rgba(156, 172, 172, 0.2);
+    }
+    .footer {
+      line-height: 76px;
+      border-top: 1px solid rgba(156, 172, 172, 0.2);
+      display: flex;
+      flex-shrink: 0;
+    }
+    input {
+      height: 76px;
+      border: none;
+      flex-grow: 1;
+      padding: 0 30px;
+      font-size: 16px;
+      background: transparent;
+    }
+    button {
+      border: none;
+      background: transparent;
+      padding: 0 30px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <div class="messages">
+
+    </div>
+    <form class="footer" onsubmit="return false;">
+      <input type="text" placeholder="Your message..">
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <template data-template="message">
+    <div class="message">
+      <div class="message__name"></div>
+      <div class="message__bubble"></div>
+    </div>
+  </template>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
